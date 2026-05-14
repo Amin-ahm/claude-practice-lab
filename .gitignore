@@ -1,0 +1,15 @@
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+.vscode/
+.idea/
+
+# Local dev
+node_modules/
+*.log
+
+# Project — local screenshots, scraps, and uploads kept out of the published site
+screenshots/
+scraps/
+uploads/
