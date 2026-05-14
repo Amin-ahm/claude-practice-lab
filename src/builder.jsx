@@ -280,7 +280,7 @@ function LibrarySection({ onSendToPlayground }) {
             <div className="eyebrow" style={{ marginBottom: 6 }}>Prompt</div>
             <PromptBlock copyText={ex.prompt}>{ex.prompt}</PromptBlock>
             <div className="row gap-8 wrap" style={{ marginTop: 12 }}>
-              <ClaudeRunner prompt={`${ex.prompt}\n\nInput:\n"""\n${ex.input}\n"""`} label="Run this with Claude" compact />
+              <ClaudeRunner prompt={`${ex.prompt}\n\nInput:\n"""\n${ex.input}\n"""`} exampleOutput={PGS.EXAMPLE_OUTPUTS[ex.id]} label="Run this with Claude" compact />
               <button className="btn btn-ghost btn-sm" type="button" onClick={() => onSendToPlayground && onSendToPlayground(`${ex.prompt}\n\nInput:\n"""\n${ex.input}\n"""`)}>
                 Open in Playground
               </button>
@@ -395,8 +395,17 @@ function PilotSection() {
           </div>
         </div>
         <div style={{ marginTop: 4 }}>
-          <ClaudeRunner prompt={prompt} label="Run with Claude" />
+          <ClaudeRunner
+            prompt={prompt}
+            exampleOutput={activePreset ? PGS.EXAMPLE_OUTPUTS["preset-" + activePreset] : null}
+            label="Run with Claude"
+          />
         </div>
+        {!activePreset && (
+          <div className="tiny muted" style={{ marginTop: 4 }}>
+            Custom prompts don't have a pre-recorded response. Pick a preset above to see what Claude returns, or copy your prompt into Claude directly.
+          </div>
+        )}
       </div>
 
       <div className="card-warn small">
@@ -488,7 +497,7 @@ ${troubleshoot}`;
                 <PromptBlock copyText={p.prompt}>{p.prompt}</PromptBlock>
               </div>
               <div className="row gap-8 wrap" style={{ marginTop: 10 }}>
-                <ClaudeRunner prompt={p.prompt} label="Try it" compact />
+                <ClaudeRunner prompt={p.prompt} exampleOutput={PGS.EXAMPLE_OUTPUTS[p.id]} label="Try it" compact />
                 <button className="btn btn-ghost btn-sm" type="button" onClick={() => onSendToPlayground && onSendToPlayground(p.prompt)}>
                   Open in Playground
                 </button>

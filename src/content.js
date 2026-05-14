@@ -193,6 +193,116 @@ Rules:
 5. Explain how a human should verify the result.
 6. Do not claim the config is approved.`;
 
+  // ---------- Pre-baked example outputs ----------
+  // Live API isn't reachable from a static host. These embedded responses let
+  // attendees see what a good (or deliberately weak) Claude response looks like
+  // for each prompt in this lab.
+
+  const BAD_PROMPT_S5_OUTPUT = `I'd be glad to help review this file. To give you useful feedback, could you share a bit more context?
+
+A few things that would help:
+- What kind of file is this (config, code, spec, release note)?
+- What's your goal: correctness, security, compliance, readability?
+- Who's the audience for the review?
+- Are there specific concerns or risks to focus on?
+
+In the meantime, based on the brief mention of updated game config values: I'd suggest double-checking version numbers, confirming any RTP or compliance-relevant fields with the responsible team, and making sure the update is documented somewhere downstream teams can find it.
+
+Let me know more about what you'd like me to check and I can give you a more focused review.`;
+
+  const BETTER_PROMPT_S5_OUTPUT = `1. Plain-English summary
+This is a configuration entry for the game "sample-game", currently tagged as base_v3, with a target RTP of 95.0 percent, using the "standard" pool type, and with one feature flag turned on.
+
+2. Important details
+- gameId: sample-game
+- rtp: 95.0
+- poolType: "standard"
+- ticketTag: "base_v3"
+- featureEnabled: true
+
+3. Assumptions
+- "rtp: 95.0" is the target return-to-player percentage, not an upper or lower bound
+- "base_v3" implies this is the third version of the base-game config
+- "standard" pool refers to a predefined pool definition I cannot see from this file alone
+- "featureEnabled" controls a single feature whose meaning is not in the file
+
+4. Questions for the owner
+- Which feature does featureEnabled gate? Is its behavior documented?
+- Is rtp 95.0 a regulator-approved target, or an internal benchmark? Who signs it off?
+- Where is the "standard" pool defined, and is a v4 of it expected for this release?
+- Should ticketTag base_v3 advance to base_v4 alongside any paytable change?
+- Are there side-bet pools associated with this game that should appear alongside the base config?
+
+5. Items that need human review
+- The RTP value (compliance-relevant) should be confirmed by the Math team before this config is treated as approved.
+- ticketTag versus the planned release version should be confirmed by Dev / PM.
+- featureEnabled state should match the QA test plan for the upcoming release.
+
+I have not approved this config and cannot. The values above are extracted as-is; the owner needs to confirm.`;
+
+  const CODE_VALIDATOR_EXAMPLE_OUTPUT = `Assumptions before coding
+- The config is a single JSON object (not an array or nested document).
+- "Required" fields for sample-game are: gameId, rtp, poolType, ticketTag.
+- "Owner-confirmation" fields are: rtp (compliance), ticketTag (release alignment), featureEnabled (release plan).
+- Unknown extra fields should be flagged, not removed.
+- The script reads the JSON from stdin or a path argument. It does not write or modify any file.
+
+Sample input
+{
+  "gameId": "sample-game",
+  "rtp": 95.0,
+  "poolType": "standard",
+  "ticketTag": "base_v3",
+  "featureEnabled": true,
+  "experimentalMode": "fast"
+}
+
+Expected output
+| field             | value         | status                          | question for owner                                |
+| gameId            | sample-game   | present                         | -                                                  |
+| rtp               | 95.0          | needs owner confirmation        | Is 95.0 the regulator-approved target?            |
+| poolType          | "standard"    | present                         | Is "standard" still the right pool for v4?        |
+| ticketTag         | "base_v3"     | needs owner confirmation        | Should this advance to base_v4 for this release?  |
+| featureEnabled    | true          | needs owner confirmation        | Does the QA plan expect this feature on?          |
+| experimentalMode  | "fast"        | unexpected field                | Was this added intentionally? Documented where?   |
+
+Code (Python)
+import json, sys
+REQUIRED = ["gameId", "rtp", "poolType", "ticketTag"]
+OWNER_CONFIRM = {
+  "rtp": "Is this the regulator-approved target?",
+  "ticketTag": "Should this advance for this release?",
+  "featureEnabled": "Does the QA plan expect this on?",
+}
+def review(cfg):
+    rows = []
+    for f in REQUIRED:
+        if f not in cfg:
+            rows.append((f, None, "MISSING", "Owner must supply this value."))
+    for f, v in cfg.items():
+        if f in OWNER_CONFIRM:
+            rows.append((f, v, "needs owner confirmation", OWNER_CONFIRM[f]))
+        elif f in REQUIRED:
+            rows.append((f, v, "present", "-"))
+        else:
+            rows.append((f, v, "unexpected field", "Was this added intentionally?"))
+    return rows
+
+Unit tests (pytest sketch)
+- test_valid_config: all required fields present, returns no MISSING rows.
+- test_missing_required: removes "rtp" -> row with status MISSING.
+- test_unexpected_field: adds "foo": 1 -> row with status "unexpected field".
+- test_owner_confirm_questions: ensures each OWNER_CONFIRM field gets its question text.
+- test_invalid_type: rtp = "high" -> still listed, but flagged for owner (this util does not enforce types; it surfaces).
+
+How to verify
+1. Run the script on the sample input above and confirm rows match the expected table.
+2. Have the Math lead confirm the rtp value and its target.
+3. Have the Dev / PM lead confirm ticketTag matches the intended release.
+4. Have QA confirm whether featureEnabled aligns with the regression plan.
+
+I have not approved this config. The output is a preparation aid; sign-off remains with the responsible owner.`;
+
   const SKILL_EXAMPLES = [
     "Cross-Department Explainer",
     "Handoff Checklist Builder",
@@ -1277,6 +1387,307 @@ When I give Claude a note from another department, I want it to always explain i
     },
   ];
 
+  // ---------- Shared example outputs (for the playground / library / pilots) ----------
+  // Built so the same example reads identically whether the user opens it from
+  // the Library, Pilot pack, or Playground preset.
+
+  const OUT_MESSY_NOTES = `1. Decisions made
+- None explicitly recorded. Several items are flagged for confirmation, but no one has yet committed.
+
+2. Open questions
+- Which specific values in the game config changed, and from what to what?
+- Is the v3 config that QA may still be using deliberately frozen, or stale?
+- What numbers does Math want to check, and against which target?
+- Does the regression QA mentioned cover the changed surface or just the base game?
+
+3. Risks
+- Two versions of the config in flight without a clear owner (QA may be testing v3 while Dev assumes v4).
+- Math has not yet confirmed values; downstream sign-off is therefore premature.
+- Regression scope is unclear, so a change could ship without being tested.
+
+4. Owners needed
+- Config values: Math lead (Owner needed - confirm name)
+- Staging / config in QA: Dev lead (Owner needed - confirm name)
+- Regression scope: QA lead (Owner needed - confirm name)
+- Release decision: PM (Owner needed - confirm name)
+
+5. Follow-up checklist
+- [ ] Capture exact diff between current and proposed config values
+- [ ] Confirm with Math which numbers are still under review
+- [ ] Confirm with Dev which config version is live in QA
+- [ ] Ask QA whether regression covers the changed surface
+- [ ] Bring all four owners into one short alignment before sign-off
+
+I have not made any approval decisions and have not invented owners. Items marked "Owner needed" require a real name before the next step.`;
+
+  const OUT_CONFIG_JSON = `1. Fields present
+- gameId: "sample-game"
+- rtp: 95.0
+- poolType: "standard"
+- ticketTag: "base_v3"
+- featureEnabled: true
+
+2. Values that need owner confirmation
+- rtp (95.0) - compliance-relevant; Math team should confirm whether this matches the regulator-approved target and the latest paytable.
+- ticketTag ("base_v3") - should be confirmed against the planned release version. If a v4 is in flight, this may be stale.
+- featureEnabled (true) - confirm with QA / PM whether this state matches the release plan.
+
+3. Possible risks or unclear items
+- The "standard" poolType is referenced but not defined in this file - a pool change elsewhere could affect this game without showing up here.
+- Side-bet configuration is not present; if the game has a side-bet, it might be configured separately and out of sync.
+- No version metadata other than ticketTag. There is no timestamp, author, or change reference.
+
+4. Questions to ask before using this config
+- Is this config the one currently in staging, or a proposed update?
+- What changed since the last accepted version?
+- Where is the "standard" pool definition, and which version is current?
+- Should ticketTag advance for the upcoming release?
+- Does featureEnabled state match the QA test plan?
+
+I cannot mark this config as approved. The values above are extracted as-is; the owner needs to confirm.`;
+
+  const OUT_FACTS_HOTFIX = `1. Facts found directly in the input
+- A hotfix was rolled for the side-bet calculator yesterday afternoon.
+- One QA regression run was inconclusive.
+- QA stated it is "probably fine."
+- A release is planned for Friday.
+
+2. Assumptions I am making
+- The hotfix was deployed to a non-production environment first.
+- "Probably fine" reflects a hunch, not a confirmed result.
+- The release on Friday is the same release this hotfix is intended to be part of.
+
+3. Unknowns or missing information
+- What did the inconclusive regression run actually show?
+- Whether the run was re-attempted, and if so with what result.
+- Whether the hotfix touched compliance-relevant fields.
+- Who currently owns the call on whether the hotfix is release-ready.
+
+4. Questions for the owner
+- Can the inconclusive regression run be re-executed and the result recorded explicitly?
+- Was the inconclusive result environmental (flaky), or did the test actually fail?
+- Is the side-bet calculator change inside the compliance review boundary?
+- Does Friday's release depend on this hotfix, or can it ship separately?
+
+5. Suggested next steps
+- Re-run the inconclusive regression and capture pass/fail with evidence before treating it as "fine."
+- If the hotfix touches compliance-relevant logic, route through the Math team before release sign-off.
+- Get an explicit go / no-go from the release owner; "probably fine" is not a sign-off.
+
+I have not approved this hotfix or the Friday release date.`;
+
+  const OUT_PARSE_REPORT = `Assumptions before coding
+- The "text report" is plain text with labeled lines like "Total spins: 1000".
+- Field labels may vary in case and surrounding whitespace.
+- "Calculated RTP" can be derived from total_win and total_spins * bet_amount if not present in the report.
+- Missing fields should be reported, not silently defaulted.
+- The script reads from stdin or a file path. It does not write or modify any file. It does not connect to a database.
+
+Sample input
+Total spins: 10000
+Total win: 9485.50
+Bet amount: 1.00
+
+Expected output
+{
+  "total_spins": 10000,
+  "total_win": 9485.50,
+  "bet_amount": 1.00,
+  "calculated_rtp": 94.855,
+  "missing_fields": []
+}
+
+Code (Python)
+import re, sys, json
+FIELDS = {
+  "total_spins": r"total\\s*spins\\s*[:=]\\s*([0-9.]+)",
+  "total_win":   r"total\\s*win\\s*[:=]\\s*([0-9.]+)",
+  "bet_amount":  r"bet\\s*amount\\s*[:=]\\s*([0-9.]+)",
+}
+def parse(text):
+    out, missing = {}, []
+    for k, pat in FIELDS.items():
+        m = re.search(pat, text, re.IGNORECASE)
+        if not m:
+            missing.append(k); continue
+        out[k] = float(m.group(1))
+    if all(k in out for k in FIELDS):
+        denom = out["total_spins"] * out["bet_amount"]
+        out["calculated_rtp"] = (out["total_win"] / denom) * 100 if denom else None
+    out["missing_fields"] = missing
+    return out
+
+if __name__ == "__main__":
+    data = sys.stdin.read() if not sys.argv[1:] else open(sys.argv[1]).read()
+    print(json.dumps(parse(data), indent=2))
+
+Unit tests (pytest sketch)
+- test_valid_report: all three fields present, calculated_rtp matches manual calc, missing_fields is empty.
+- test_missing_bet_amount: returns calculated_rtp = None, "bet_amount" in missing_fields.
+- test_invalid_type: bet_amount = "free" -> regex doesn't match, field reported missing rather than raising.
+- test_case_insensitive: "TOTAL SPINS: 100" still parsed.
+- test_zero_division: total_spins = 0 -> calculated_rtp = None, no exception.
+
+How to verify
+1. Run the script against the sample input and confirm the JSON matches the expected output.
+2. Run pytest and confirm all five test cases pass.
+3. Spot-check calculated_rtp against a known-good report before trusting the field.
+
+I have not approved any RTP value or report. This utility surfaces extracted numbers; sign-off remains with the responsible owner.`;
+
+  const OUT_PHASED = `Phase 1 - Understand
+
+Summary of the input
+The Math team has handed off a v4 paytable. Three downstream teams are now waiting on different things: QA needs to run regression against it, PM needs a release-readiness call for Friday, and Dev is asking whether the side-bet feature flag should remain enabled in staging.
+
+Facts
+- A v4 paytable exists and has been handed off by the Math team.
+- QA's next step is a regression run.
+- PM is asking whether a Friday release is achievable.
+- Dev has an open question about the side-bet flag state in staging.
+
+Assumptions
+- The handoff included enough information for QA to start (paytable + change summary).
+- The Friday release date refers to this same v4 paytable, not an unrelated release.
+- "Side-bet flag" gates the side-bet feature in staging only; production state was not mentioned.
+- No one has yet approved the v4 paytable for release.
+
+Missing context
+- Whether the v4 handoff includes a diff against v3, or only the new values.
+- Whether the side-bet pool was regenerated alongside the paytable.
+- Current staging config: which paytable version is currently active there.
+- Who owns the release-readiness call: PM alone, or PM + Math + QA jointly.
+- Whether Math has flagged any value as compliance-relevant.
+
+Waiting for "go" before producing Phase 2 (Plan).
+
+I have not approved anything. I have not changed any files.`;
+
+  const OUT_BAD_DIAGNOSIS = `Why this output fails
+- Too confident: "Everything looks correct" claims a verified state without showing how it was verified.
+- No evidence: no extracted values from the source are quoted back.
+- No source values: the RTP is mentioned but no specific number is named.
+- No assumptions listed: any inference Claude made is hidden.
+- No human owner review: no one is identified as needing to sign off.
+- Makes an approval decision: "this should be approved" is a decision Claude should not make.
+
+What a safer version would look like
+A safer answer would: extract the actual values from the input, separate facts from assumptions, identify what is missing, list questions for the responsible owner, and explicitly say it cannot approve.
+
+Rewrite
+
+I cannot approve this. Here is what I can do:
+
+Facts in the input
+- [No extracted RTP value yet - source missing]
+
+Assumptions
+- The reviewer wants this checked against a known target.
+
+Unknowns
+- The current target RTP.
+- Who owns the decision to release.
+
+Questions for the owner
+- What is the target RTP for this game?
+- Who signs off on RTP changes here - Math, compliance, or both?
+
+Recommended next check
+- Math team confirms the RTP value against the regulator-approved target before any release decision.`;
+
+  const OUT_SKILL_SEED = `# Cross-Department Handoff Explainer (Skill seed)
+
+Use this skill when
+You receive a file, note, or change from another PGS department (Math, V2, iGaming, QA, Dev, PM) and need to prepare for a review conversation with the owner.
+
+Claude should
+- Summarize the input in plain English (no department-internal shorthand).
+- Extract specific values, version numbers, and dates from the input.
+- List terms that may be unfamiliar to the receiving department under "Terms to confirm" rather than guessing.
+- Generate questions grouped by responsible department.
+- Surface any compliance-relevant or release-blocking items separately.
+
+Claude must not
+- Approve the handoff.
+- Decide release readiness.
+- Treat any value as confirmed without owner sign-off.
+- Guess the meaning of internal terms; flag them instead.
+- Modify any files.
+
+Output format
+1. Summary
+2. Important details (values, versions, dates)
+3. Assumptions (clearly labeled)
+4. Questions for the owner (grouped by department)
+5. Items requiring human owner review
+6. Terms to confirm
+
+Maturity
+- Used twice -> live as a Prompt Card.
+- Used three times across a team -> promote to a shared Project or Skill.
+- Eligible for team-wide provisioning where company settings allow.`;
+
+  const OUT_PILOT_TEMPLATE = `This prompt is a template with [bracketed] placeholders. To produce real output, fill in the bracketed fields with your actual task, then run it. Here's how Claude would respond if you ran the template as-is without filling it in:
+
+I notice the prompt still contains placeholder fields like [Describe the task], [Describe sample input], and [Describe output]. To give you a useful response I need the real values:
+
+- What is the specific task this utility should do?
+- What does the sample input look like (paste 1-3 lines)?
+- What should the expected output be?
+
+Once you fill those in, I'll produce assumptions, sample input/output, code, unit tests, and verification steps, with no file modifications and no approval claims.`;
+
+  const OUT_FACTS_TEMPLATE = `This prompt is a template - it asks Claude to separate facts from assumptions but doesn't include input yet. To see it in action, paste any short piece of text (a Slack thread, a release note, a hotfix summary) after the prompt. Here's the shape Claude will produce once you do:
+
+1. Facts found directly in the input
+- [each fact, traceable to a specific sentence]
+
+2. Assumptions
+- [each labeled clearly, not presented as fact]
+
+3. Unknowns or missing information
+- [gaps that need an owner to fill]
+
+4. Questions for the owner
+- [specific, answerable, addressed to a named person where possible]
+
+5. Suggested next steps
+- [actions a human can take to close the unknowns]
+
+Claude will not present assumptions as facts. Claude will not approve anything.`;
+
+  const EXAMPLE_OUTPUTS = {
+    // Library examples (section 12)
+    ex1: OUT_MESSY_NOTES,
+    ex2: EXPLAINER_EXAMPLE_OUTPUT,
+    ex3: OUT_CONFIG_JSON,
+    ex4: OUT_BAD_DIAGNOSIS,
+    ex5: OUT_PARSE_REPORT,
+    ex6: OUT_SKILL_SEED,
+
+    // Pilot ideas (section 14)
+    p1: EXPLAINER_EXAMPLE_OUTPUT,
+    p2: OUT_MESSY_NOTES,
+    p3: OUT_CONFIG_JSON,
+    p4: OUT_FACTS_TEMPLATE,
+    p5: OUT_PILOT_TEMPLATE,
+    p6: OUT_SKILL_SEED,
+
+    // Playground presets (section 13)
+    "preset-explainer":         EXPLAINER_EXAMPLE_OUTPUT,
+    "preset-messy-notes":       OUT_MESSY_NOTES,
+    "preset-config-review":     OUT_CONFIG_JSON,
+    "preset-facts-assumptions": OUT_FACTS_HOTFIX,
+    "preset-small-utility":     OUT_PARSE_REPORT,
+    "preset-phased":            OUT_PHASED,
+
+    // Section-specific runs (section 04, 05, 07)
+    "bad-prompt":     BAD_PROMPT_S5_OUTPUT,
+    "better-prompt":  BETTER_PROMPT_S5_OUTPUT,
+    "explainer-run":  EXPLAINER_EXAMPLE_OUTPUT,
+    "code-validator": CODE_VALIDATOR_EXAMPLE_OUTPUT,
+  };
+
   return {
     SECTIONS, EXAMPLE_PROJECT,
     TOOLBOX_HELPS, TOOLBOX_AVOID,
@@ -1287,5 +1698,6 @@ When I give Claude a note from another department, I want it to always explain i
     SKILL_EXAMPLES, SKILL_TEMPLATE,
     ISSUES, TEMPLATES, EXAMPLES, TROUBLESHOOT, MATURITY,
     PRESETS, PILOT_IDEAS,
+    EXAMPLE_OUTPUTS,
   };
 })();

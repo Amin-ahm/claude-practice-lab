@@ -26,7 +26,7 @@ python3 - m http.server 8000
 
 Or any static server (`npx serve`, `caddy file-server`, etc.).
 
-> Note: `window.claude.complete()` is provided by the Claude artifact host. When running locally outside that host, the Playground's "Run with Claude" button will error. Everything else (copy buttons, templates, navigation) works offline.
+> Note: the "Run with Claude" buttons show pre-recorded example responses so the lab works fully offline / on GitHub Pages. To run a prompt against the live API, copy it into claude.ai directly.
 
 ## Deploy to GitHub Pages
 

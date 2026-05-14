@@ -344,26 +344,28 @@ function Toggle({ value, onChange, options }) {
   );
 }
 
-// ---------- Claude Runner (live window.claude.complete) ----------
-function ClaudeRunner({ prompt, label = "Run with Claude", compact = false, hint }) {
+// ---------- Claude Runner ----------
+// Shows a pre-baked example response with a short simulated delay.
+// The live API isn't reachable from a static GitHub Pages build, so we
+// embed realistic outputs at each call site via the `exampleOutput` prop.
+function ClaudeRunner({ prompt, exampleOutput, label = "Run with Claude", compact = false, hint }) {
   const [output, setOutput] = useState("");
   const [running, setRunning] = useState(false);
   const [error, setError] = useState(null);
 
   const run = async () => {
     if (!prompt || !prompt.trim()) {
-      setError("Prompt is empty - write or paste a prompt first.");
+      setError("Prompt is empty. Paste or write a prompt first.");
+      return;
+    }
+    if (!exampleOutput) {
+      setError("No example response is set for this prompt. Edit the prompt back to one of the presets, or copy it into Claude directly.");
       return;
     }
     setRunning(true); setError(null); setOutput("");
-    try {
-      const result = await window.claude.complete(prompt);
-      setOutput(result || "(Claude returned an empty response.)");
-    } catch (e) {
-      setError(e?.message || String(e) || "Run failed.");
-    } finally {
-      setRunning(false);
-    }
+    await new Promise((r) => setTimeout(r, 650 + Math.random() * 400));
+    setOutput(exampleOutput);
+    setRunning(false);
   };
 
   const clear = () => { setOutput(""); setError(null); };
@@ -401,7 +403,10 @@ function ClaudeRunner({ prompt, label = "Run with Claude", compact = false, hint
       )}
       {output && (
         <div className="card-flat fade-in">
-          <div className="eyebrow" style={{ marginBottom: 8 }}>Claude's response</div>
+          <div className="row between gap-8" style={{ marginBottom: 8 }}>
+            <div className="eyebrow">Example response</div>
+            <span className="pill" style={{ background: "var(--paper-2)" }}>pre-recorded</span>
+          </div>
           <div style={{ whiteSpace: "pre-wrap", fontSize: 14, lineHeight: 1.55 }}>{output}</div>
           <div className="row" style={{ marginTop: 10, justifyContent: "flex-end" }}>
             <CopyButton text={output} label="Copy response" />

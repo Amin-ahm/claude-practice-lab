@@ -168,6 +168,7 @@ function PromptsSection({ onOpenPlayground }) {
           <div style={{ marginTop: 12 }}>
             <ClaudeRunner
               prompt={`${PGS.BAD_PROMPT_S5}\n\n[A made-up file about updated game config values.]`}
+              exampleOutput={PGS.EXAMPLE_OUTPUTS["bad-prompt"]}
               label="Run the bad prompt"
               compact
               hint="Watch how generic the answer feels."
@@ -180,6 +181,7 @@ function PromptsSection({ onOpenPlayground }) {
           <div style={{ marginTop: 12 }}>
             <ClaudeRunner
               prompt={`${PGS.BETTER_PROMPT_S5}\n\nContext:\nA configuration file from the QA team showing the v4 paytable for a sample slot game.\n\nThe file contains:\n- gameId: "sample-game"\n- rtp: 95.0\n- poolType: "standard"\n- ticketTag: "base_v3"\n- featureEnabled: true`}
+              exampleOutput={PGS.EXAMPLE_OUTPUTS["better-prompt"]}
               label="Run the better prompt"
               compact
               hint="Notice the structure, the assumptions, the questions for the owner."
@@ -220,7 +222,7 @@ function ExplainerSection({ onSendToPlayground }) {
         <div className="card-flat mono small" style={{ whiteSpace: "pre-wrap" }}>{PGS.EXPLAINER_EXAMPLE_INPUT}</div>
       </div>
       <div className="row gap-8 wrap">
-        <ClaudeRunner prompt={fullPrompt} label="Run on the example" compact />
+        <ClaudeRunner prompt={fullPrompt} exampleOutput={PGS.EXAMPLE_OUTPUTS["explainer-run"]} label="Run on the example" compact />
         <button className="btn btn-ghost btn-sm" type="button" onClick={() => onSendToPlayground && onSendToPlayground(fullPrompt)}>
           Open in Playground
         </button>
@@ -301,7 +303,7 @@ function CodeSection() {
         <div className="eyebrow" style={{ marginBottom: 8 }}>A concrete example - config validator</div>
         <PromptBlock copyText={PGS.CODE_VALIDATOR_EXAMPLE}>{PGS.CODE_VALIDATOR_EXAMPLE}</PromptBlock>
         <div style={{ marginTop: 12 }}>
-          <ClaudeRunner prompt={PGS.CODE_VALIDATOR_EXAMPLE} label="Run it" compact hint="See how Claude scopes a small utility with tests." />
+          <ClaudeRunner prompt={PGS.CODE_VALIDATOR_EXAMPLE} exampleOutput={PGS.EXAMPLE_OUTPUTS["code-validator"]} label="Run it" compact hint="See how Claude scopes a small utility with tests." />
         </div>
       </div>
     </div>
