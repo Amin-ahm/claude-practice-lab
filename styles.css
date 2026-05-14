@@ -64,6 +64,11 @@ html, body {
 body {
   min-height: 100vh;
   text-wrap: pretty;
+  padding-top: calc(88px + env(safe-area-inset-top));
+}
+
+@media (max-width: 720px) {
+  body { padding-top: calc(82px + env(safe-area-inset-top)); }
 }
 
 #root { min-height: 100vh; }
@@ -500,13 +505,16 @@ p { margin: 0; }
 
 /* Top bar */
 .topbar {
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   z-index: 30;
-  background: rgba(247, 244, 238, 0.85);
+  background: rgba(247, 244, 238, 0.92);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   border-bottom: 1px solid var(--line);
+  padding-top: env(safe-area-inset-top);
 }
 .topbar-inner {
   display: flex;
