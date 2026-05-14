@@ -148,8 +148,11 @@ function AttendeeApp({ sectionId, onChangeSection, onSwitchMode }) {
 
       {/* Bottom nav */}
       <nav style={{
-        position: "sticky", bottom: 0, background: "rgba(247, 244, 238, 0.92)",
-        backdropFilter: "blur(10px)", borderTop: "1px solid var(--line)", padding: "10px 16px",
+        position: "fixed", left: 0, right: 0, bottom: 0,
+        background: "rgba(247, 244, 238, 0.92)",
+        backdropFilter: "blur(10px)", WebkitBackdropFilter: "blur(10px)",
+        borderTop: "1px solid var(--line)",
+        padding: "10px 16px calc(10px + env(safe-area-inset-bottom)) 16px",
         display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12, zIndex: 20,
       }}>
         <button

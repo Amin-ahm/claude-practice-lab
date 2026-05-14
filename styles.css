@@ -57,7 +57,7 @@ html, body {
   font-family: var(--font-sans);
   font-size: 16px;
   line-height: 1.5;
-  - webkit-font-smoothing: antialiased;
+  -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
 
@@ -75,7 +75,7 @@ a { color: inherit; }
 .display {
   font-family: var(--font-display);
   font-weight: 400;
-  letter-spacing: - 0.01em;
+  letter-spacing: -0.01em;
   line-height: 1.02;
 }
 .display-i { font-style: italic; }
@@ -91,7 +91,7 @@ a { color: inherit; }
 
 .mono { font-family: var(--font-mono); }
 
-h1, h2, h3, h4 { margin: 0; font-weight: 600; letter-spacing: - 0.01em; line-height: 1.15; }
+h1, h2, h3, h4 { margin: 0; font-weight: 600; letter-spacing: -0.01em; line-height: 1.15; }
 p { margin: 0; }
 
 /* ============ Layout ============ */
@@ -505,7 +505,7 @@ p { margin: 0; }
   z-index: 30;
   background: rgba(247, 244, 238, 0.85);
   backdrop-filter: blur(8px);
-  - webkit-backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   border-bottom: 1px solid var(--line);
 }
 .topbar-inner {
@@ -523,7 +523,7 @@ p { margin: 0; }
   gap: 9px;
   font-weight: 600;
   font-size: 15px;
-  letter-spacing: - 0.01em;
+  letter-spacing: -0.01em;
 }
 .logo-mark {
   width: 22px; height: 22px;
@@ -603,7 +603,7 @@ p { margin: 0; }
   font-family: var(--font-display);
   font-size: clamp(48px, 6vw, 92px);
   line-height: 1.0;
-  letter-spacing: - 0.02em;
+  letter-spacing: -0.02em;
   margin-bottom: 18px;
 }
 .presenter-subtitle {
