@@ -9,7 +9,7 @@ Thumbs.db
 node_modules/
 *.log
 
-# Project — local screenshots, scraps, and uploads kept out of the published site
+# Project - local screenshots, scraps, and uploads kept out of the published site
 screenshots/
 scraps/
 uploads/

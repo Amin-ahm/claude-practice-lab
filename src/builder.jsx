@@ -1,18 +1,18 @@
-/* PGS Lab — Templates, Issues, Library, Playground (was Pilot), Take-home (was Kit), Closing */
+/* PGS Lab - Templates, Issues, Library, Playground (was Pilot), Take-home (was Kit), Closing */
 
 const { useState: useStateB, useMemo: useMemoB, useEffect: useEffectB } = React;
 
-// ============ 11 Workflow Templates ============
+// ============ 10 Workflow Templates ============
 function TemplatesSection() {
   const [active, setActive] = useStateB(PGS.TEMPLATES[0].id);
   const t = PGS.TEMPLATES.find((x) => x.id === active);
   return (
     <div className="col" style={{ gap: 24 }}>
       <SectionTitle
-        num="11"
+        num="10"
         eyebrow="Templates"
         title="Seven files that keep Claude reviewable."
-        sub="Filled-in examples from a fictional PGS scenario. They cohere as a set — read them together. Edit the values, names, and dates for your own task."
+        sub="Filled-in examples from a fictional PGS scenario. They cohere as a set - read them together. Edit the values, names, and dates for your own task."
       />
 
       <div className="card-teal">
@@ -52,7 +52,7 @@ function TemplatesSection() {
   );
 }
 
-// ============ 12 Common Issues Lab ============
+// ============ 11 Common Issues Lab ============
 
 function IssueExercise({ issue }) {
   const ex = issue.exercise;
@@ -86,7 +86,7 @@ function IssueExercise({ issue }) {
         <OptionGroup options={ex.options} value={multiAns} onChange={setMultiAns} multi stack idKey={"m-" + issue.id} />
         {multiAns.length > 0 && (
           <div className={"fade-in card-" + (all ? "good" : "warn") + " small"} style={{ marginTop: 10 }}>
-            {all ? "All correct. " : "Keep going — there are more. "}{ex.explanation}
+            {all ? "All correct. " : "Keep going - there are more. "}{ex.explanation}
           </div>
         )}
       </div>
@@ -227,7 +227,7 @@ function IssuesSection({ onSendToPlayground }) {
   return (
     <div className="col" style={{ gap: 18 }}>
       <SectionTitle
-        num="12"
+        num="11"
         eyebrow="Common issues lab"
         title="What goes wrong, and the fix."
         sub="Each card: what users experience, why it happens, the fix, and a quick exercise. Tap one open."
@@ -255,12 +255,12 @@ function IssuesSection({ onSendToPlayground }) {
   );
 }
 
-// ============ 13 Example Library ============
+// ============ 12 Example Library ============
 function LibrarySection({ onSendToPlayground }) {
   return (
     <div className="col" style={{ gap: 24 }}>
       <SectionTitle
-        num="13"
+        num="12"
         eyebrow="Library"
         title="Examples to copy, adapt, run."
         sub="Generic PGS-style examples. Replace the input with your own real (but sanitized) data."
@@ -323,7 +323,7 @@ function LibrarySection({ onSendToPlayground }) {
   );
 }
 
-// ============ 14 Playground (replaces Pilot) ============
+// ============ 13 Playground ============
 function PilotSection() {
   const [prompt, setPrompt] = usePlaygroundPrompt();
   const [activePreset, setActivePreset] = useStateB(PGS.PRESETS[0].id);
@@ -344,14 +344,14 @@ function PilotSection() {
   return (
     <div className="col" style={{ gap: 22 }}>
       <SectionTitle
-        num="14"
+        num="13"
         eyebrow="Playground"
         title="Try Claude live."
         sub="Pick a preset or write your own. Hit Run. See what Claude actually returns. This is where the patterns from earlier sections become real."
       />
 
       <div>
-        <div className="eyebrow" style={{ marginBottom: 8 }}>Presets — tap to load</div>
+        <div className="eyebrow" style={{ marginBottom: 8 }}>Presets - tap to load</div>
         <div className="grid grid-2">
           {PGS.PRESETS.map((p) => {
             const active = p.id === activePreset;
@@ -406,7 +406,7 @@ function PilotSection() {
   );
 }
 
-// ============ 15 Take-home pack (replaces Kit) ============
+// ============ 14 Take-home pack ============
 function KitSection({ onSendToPlayground }) {
   const phaseTemplate = PGS.TEMPLATES.find((t) => t.id === "phase").template;
   const todoTemplate  = PGS.TEMPLATES.find((t) => t.id === "todo").template;
@@ -420,7 +420,7 @@ When Claude gives a bad answer, check:
 
 ${PGS.TROUBLESHOOT.map((q, i) => `${i + 1}. ${q}`).join("\n")}`;
 
-  const fullPack = `# PGS Claude — Take-home Pack
+  const fullPack = `# PGS Claude - Take-home Pack
 
 ────────────────────────────────
 ## Phase prompt
@@ -448,7 +448,7 @@ ${troubleshoot}`;
   return (
     <div className="col" style={{ gap: 24 }}>
       <SectionTitle
-        num="15"
+        num="14"
         eyebrow="Take-home"
         title="Take this with you."
         sub="Generic templates + a troubleshooting checklist + six concrete pilot starters. Copy what fits, ignore the rest."
@@ -466,7 +466,7 @@ ${troubleshoot}`;
       </div>
 
       <div>
-        <div className="eyebrow" style={{ marginBottom: 10 }}>Six pilot ideas — pick one, run it this week</div>
+        <div className="eyebrow" style={{ marginBottom: 10 }}>Six pilot ideas - pick one, run it this week</div>
         <div className="col gap-12">
           {PGS.PILOT_IDEAS.map((p, i) => (
             <div key={p.id} className="card">
@@ -499,7 +499,7 @@ ${troubleshoot}`;
       </div>
 
       <div>
-        <div className="eyebrow" style={{ marginBottom: 10 }}>Templates — individual copies</div>
+        <div className="eyebrow" style={{ marginBottom: 10 }}>Templates - individual copies</div>
         <div className="grid grid-2">
           <CopyCard title="Phase prompt"      body={phaseTemplate} />
           <CopyCard title="TODO.md"           body={todoTemplate} />
@@ -536,12 +536,12 @@ function CopyCard({ title, body }) {
   );
 }
 
-// ============ 16 Closing ============
+// ============ 15 Closing ============
 function ClosingSection() {
   return (
     <div className="col" style={{ gap: 24 }}>
       <SectionTitle
-        num="16"
+        num="15"
         eyebrow="Close"
         title="Leave with one safe pilot."
         sub="Don't try to automate everything. Pick one repeated task that is low-risk, annoying, and easy to verify. If it works twice, share it."

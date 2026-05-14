@@ -1,11 +1,11 @@
-/* PGS Lab — Presenter Mode. Sequential, projection-friendly views. */
+/* PGS Lab - Presenter Mode. Sequential, projection-friendly views. */
 
 const { useState: useStateP, useEffect: useEffectP, useMemo: useMemoP } = React;
 
 // Presenter has its own simplified, projection-friendly screen per section.
 // We keep it visually distinct from attendee mode: huge display type, generous space, less chrome.
 
-function PSlideShell({ idx, total, section, children, facilitator }) {
+function PSlideShell({ idx, total, section, children }) {
   const t = useTimer(section.min * 60);
   useEffectP(() => { t.reset(section.min * 60); }, [section.id]); // reset on section change
   return (
@@ -29,13 +29,6 @@ function PSlideShell({ idx, total, section, children, facilitator }) {
       </div>
 
       <div className="presenter-body">{children}</div>
-
-      {facilitator && (
-        <div className="facilitator" style={{ marginTop: 24 }}>
-          <span className="pill" style={{ marginBottom: 8, display: "inline-flex" }}>Facilitator note</span>
-          <div>{facilitator}</div>
-        </div>
-      )}
     </div>
   );
 }
@@ -51,39 +44,12 @@ function PWelcome() {
           PGS Claude<br/>Practice Lab.
         </h1>
         <p className="presenter-subtitle" style={{ marginTop: 18 }}>
-          Scan the QR code. Complete the 60-second onboarding.
-          We're here to find one safe Claude pilot per attendee — not full adoption overnight.
+          Scan the QR to open the lab on your phone. We're here to find
+          one safe Claude pilot per attendee - not full adoption overnight.
         </p>
       </div>
       <div className="row items-stretch" style={{ flex: "0 0 auto", alignItems: "center" }}>
         <QRPlaceholder />
-      </div>
-    </div>
-  );
-}
-
-function PContext() {
-  return (
-    <div>
-      <h1 className="presenter-title display"><span className="display-i">What this is</span> — and isn't.</h1>
-      <div className="grid grid-2" style={{ marginTop: 32, gap: 18 }}>
-        <div>
-          <div className="eyebrow" style={{ marginBottom: 10 }}>Not</div>
-          <div className="col gap-8">
-            <div className="card"><div className="b">A generic AI lecture</div></div>
-            <div className="card"><div className="b">A replacement for department judgement</div></div>
-            <div className="card"><div className="b">Someone outside your team telling you your workflow</div></div>
-          </div>
-        </div>
-        <div>
-          <div className="eyebrow" style={{ marginBottom: 10, color: "var(--accent-ink)" }}>Is</div>
-          <div className="col gap-8">
-            <div className="card-accent"><div className="b">A practical lab</div></div>
-            <div className="card-accent"><div className="b">A safe-use discussion</div></div>
-            <div className="card-accent"><div className="b">One useful pilot per person</div></div>
-            <div className="card-accent"><div className="b">Reusable prompts & Skills</div></div>
-          </div>
-        </div>
       </div>
     </div>
   );
@@ -166,7 +132,7 @@ function PExplainer() {
     <div>
       <h1 className="presenter-title display">Cross-department <span className="display-i">explainer.</span></h1>
       <p className="presenter-subtitle" style={{ marginTop: 14 }}>
-        Math, V2, iGaming, QA, Dev, PM — different terms, different assumptions. Claude is the translator, not the decider.
+        Math, V2, iGaming, QA, Dev, PM - different terms, different assumptions. Claude is the translator, not the decider.
       </p>
       <div className="grid grid-2" style={{ marginTop: 28, gap: 18 }}>
         <div>
@@ -340,7 +306,7 @@ function PPilot() {
     <div>
       <h1 className="presenter-title display"><span className="display-i">Try</span> Claude live.</h1>
       <p className="presenter-subtitle" style={{ marginTop: 14 }}>
-        Open the Playground on your phone. Pick a preset. Hit Run. Take 5 minutes to actually try something — pick the preset closest to your own work.
+        Open the Playground on your phone. Pick a preset. Hit Run. Take 5 minutes to actually try something - pick the preset closest to your own work.
       </p>
       <div className="grid grid-3" style={{ marginTop: 28 }}>
         {PGS.PRESETS.filter(p => p.id !== "freestyle").map((p, i) => (
@@ -360,7 +326,7 @@ function PKit() {
     <div>
       <h1 className="presenter-title display">Take-home <span className="display-i">pack.</span></h1>
       <p className="presenter-subtitle" style={{ marginTop: 14 }}>
-        Six concrete pilot ideas — pick one to run this week. Generic templates for phases, TODO.md, checklists, prompt cards, Skill seeds. A troubleshooting checklist.
+        Six concrete pilot ideas - pick one to run this week. Generic templates for phases, TODO.md, checklists, prompt cards, Skill seeds. A troubleshooting checklist.
       </p>
       <div className="grid grid-3" style={{ marginTop: 28 }}>
         {PGS.PILOT_IDEAS.map((p, i) => (
@@ -396,7 +362,7 @@ function PClosing() {
 }
 
 const PRESENTER_VIEWS = {
-  welcome: PWelcome, context: PContext, environment: PEnvironment,
+  welcome: PWelcome, environment: PEnvironment,
   toolbox: PToolbox, prompts: PPrompts, explainer: PExplainer,
   trust: PTrust, code: PCode, skills: PSkills, methods: PMethods,
   templates: PTemplates, issues: PIssues, library: PLibrary,
@@ -409,7 +375,7 @@ function PresenterApp({ sectionId, onPrev, onNext, hasPrev, hasNext }) {
   const View = PRESENTER_VIEWS[sectionId] || (() => <div>Section not found</div>);
   return (
     <div className="presenter">
-      <PSlideShell idx={idx} total={PGS.SECTIONS.length} section={section} facilitator={PGS.FACILITATOR[sectionId]}>
+      <PSlideShell idx={idx} total={PGS.SECTIONS.length} section={section}>
         <div className="fade-in" key={sectionId}><View /></div>
       </PSlideShell>
       <div className="presenter-stage" style={{ paddingTop: 0, paddingBottom: 24 }}>

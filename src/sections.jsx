@@ -1,13 +1,13 @@
-/* PGS Lab — Attendee section views. Playground-first, light on forms. */
+/* PGS Lab - Attendee section views. Playground-first, light on forms. */
 
 const { useState: useStateS, useEffect: useEffectS, useMemo: useMemoS } = React;
 
-// ---------- 01 Welcome (no form — just the value prop + map of what's inside) ----------
+// ---------- 01 Welcome (no form - just the value prop + map of what's inside) ----------
 function WelcomeSection({ onJump }) {
   const map = [
     { t: "See what good looks like",     d: "Side-by-side bad vs better prompts, with the actual fixes that make Claude useful.",                  go: "prompts" },
     { t: "Try Claude live",              d: "Open the Playground. Pick a preset. Hit Run. See what Claude actually returns.",                       go: "pilot" },
-    { t: "Find what fits your work",     d: "Cross-department explainer, code patterns, skill seeds — pick the one closest to your day.",           go: "toolbox" },
+    { t: "Find what fits your work",     d: "Cross-department explainer, code patterns, skill seeds - pick the one closest to your day.",           go: "toolbox" },
     { t: "Avoid the common traps",       d: "15 ways Claude answers go wrong, with the fix and a 30-second exercise for each.",                    go: "issues" },
     { t: "Copy what you need",           d: "Templates for phases, TODO.md, checklists, prompt cards. A take-home pack of pilot ideas.",            go: "templates" },
   ];
@@ -19,7 +19,7 @@ function WelcomeSection({ onJump }) {
           <span className="display-i">A practical lab</span><br/>for working with Claude.
         </h1>
         <p style={{ fontSize: 17, lineHeight: 1.5, marginTop: 18, color: "var(--ink-2)", maxWidth: 580 }}>
-          You already have Claude Team. The interesting question isn't <em>can</em> you use Claude — it's where it actually helps your workflow, and how to keep it reviewable. Browse around. Try things. Take what's useful.
+          You already have Claude Team. The interesting question isn't <em>can</em> you use Claude - it's where it actually helps your workflow, and how to keep it reviewable. Browse around. Try things. Take what's useful.
         </p>
       </div>
 
@@ -29,7 +29,7 @@ function WelcomeSection({ onJump }) {
           <div>
             <div className="b">Today's goal: one safe pilot per person.</div>
             <div className="small" style={{ marginTop: 4 }}>
-              Not full adoption. Not a deep dive on AI. Pick one repeated, low-risk, easy-to-verify task you do — and leave with a prompt that handles it.
+              Not full adoption. Not a deep dive on AI. Pick one repeated, low-risk, easy-to-verify task you do - and leave with a prompt that handles it.
             </div>
           </div>
         </div>
@@ -73,58 +73,11 @@ function WelcomeSection({ onJump }) {
   );
 }
 
-// ---------- 02 What this is — no form, just framing ----------
-function ContextSection() {
-  const isNot = [
-    { t: "A generic AI lecture",                 d: "No keynote slides about how AI changes everything." },
-    { t: "A replacement for department judgment", d: "Owners still own decisions. Claude drafts." },
-    { t: "Someone outside your team telling you your workflow", d: "We don't pretend to know Math, V2, or iGaming internals." },
-  ];
-  const is = [
-    { t: "A practical lab",                d: "Small exercises you do on your phone or laptop." },
-    { t: "A safe-use discussion",          d: "What Claude should and should not be asked to do." },
-    { t: "One useful pilot per person",    d: "Pick the example closest to your work." },
-    { t: "Reusable prompts and Skills",    d: "What's worth packaging for your team?" },
-  ];
-  return (
-    <div className="col" style={{ gap: 24 }}>
-      <SectionTitle
-        num="02"
-        eyebrow="Framing"
-        title="What this is — and isn't."
-        sub="The point is not full adoption. It's one safe pilot per attendee, and a handful of reusable patterns the team can keep."
-      />
-      <div>
-        <div className="eyebrow" style={{ marginBottom: 10 }}>This session is NOT</div>
-        <div className="grid grid-3">
-          {isNot.map((x) => (
-            <div className="card" key={x.t}>
-              <div className="b" style={{ marginBottom: 4 }}>{x.t}</div>
-              <div className="small muted">{x.d}</div>
-            </div>
-          ))}
-        </div>
-      </div>
-      <div>
-        <div className="eyebrow" style={{ marginBottom: 10, color: "var(--accent-ink)" }}>This session IS</div>
-        <div className="grid grid-2">
-          {is.map((x) => (
-            <div className="card-accent" key={x.t}>
-              <div className="b" style={{ marginBottom: 4 }}>{x.t}</div>
-              <div className="small">{x.d}</div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// ---------- 03 Environment — info-only ----------
+// ---------- 02 Environment - info-only ----------
 function EnvironmentSection() {
   const map = [
     { t: "Projects",        d: "Shared context, files, instructions, glossaries." },
-    { t: "Artifacts",       d: "Interactive mini-apps and visual explainers — like this workshop." },
+    { t: "Artifacts",       d: "Interactive mini-apps and visual explainers - like this workshop." },
     { t: "Skills",          d: "Repeatable workflows packaged with rules, examples, and output format." },
     { t: "Claude Code",     d: "Coding help, when scoped and tested." },
     { t: "Shared library",  d: "Vetted prompts the team can copy and improve." },
@@ -132,7 +85,7 @@ function EnvironmentSection() {
   return (
     <div className="col" style={{ gap: 24 }}>
       <SectionTitle
-        num="03"
+        num="02"
         eyebrow="The environment"
         title="You already have Claude Team."
         sub={`The adoption question is not "can people access Claude?" It's: can we create reusable Projects, Artifacts, and Skills that make Claude useful in real workflows? Where company settings allow it, those can be shared.`}
@@ -159,14 +112,14 @@ function EnvironmentSection() {
   );
 }
 
-// ---------- 04 Toolbox — info-only, no form ----------
+// ---------- 03 Toolbox - info-only, no form ----------
 function ToolboxSection() {
   return (
     <div className="col" style={{ gap: 24 }}>
       <SectionTitle
-        num="04"
+        num="03"
         eyebrow="Toolbox"
-        title="What Claude can — and shouldn't — help with."
+        title="What Claude can - and shouldn't - help with."
       />
       <div>
         <div className="eyebrow" style={{ marginBottom: 10 }}>Useful patterns</div>
@@ -194,15 +147,15 @@ function ToolboxSection() {
   );
 }
 
-// ---------- 05 Bad → better with live runners on both ----------
+// ---------- 04 Bad → better with live runners on both ----------
 function PromptsSection({ onOpenPlayground }) {
   return (
     <div className="col" style={{ gap: 24 }}>
       <SectionTitle
-        num="05"
+        num="04"
         eyebrow="Prompt craft"
         title="Bad prompt → better prompt."
-        sub="Most disappointing answers trace back to a prompt that was too short. Same input — try both."
+        sub="Most disappointing answers trace back to a prompt that was too short. Same input - try both."
       />
 
       <div className="compare-grid">
@@ -246,17 +199,17 @@ function PromptsSection({ onOpenPlayground }) {
   );
 }
 
-// ---------- 06 Cross-department explainer — direct, with Run ----------
+// ---------- 05 Cross-department explainer - direct, with Run ----------
 function ExplainerSection({ onSendToPlayground }) {
   const [showExample, setShowExample] = useStateS(false);
   const fullPrompt = `${PGS.EXPLAINER_PROMPT}\n\nFile / note:\n"""\n${PGS.EXPLAINER_EXAMPLE_INPUT}\n"""`;
   return (
     <div className="col" style={{ gap: 24 }}>
       <SectionTitle
-        num="06"
+        num="05"
         eyebrow="Cross-team"
         title="Translate a file from another team."
-        sub="Math, V2, iGaming, QA, Dev, PM — different terms and assumptions. Claude is the translator, not the decider."
+        sub="Math, V2, iGaming, QA, Dev, PM - different terms and assumptions. Claude is the translator, not the decider."
       />
       <div>
         <div className="eyebrow" style={{ marginBottom: 8 }}>The template</div>
@@ -285,13 +238,13 @@ function ExplainerSection({ onSendToPlayground }) {
   );
 }
 
-// ---------- 07 Trust — light interaction: 1-tap reveal ----------
+// ---------- 06 Trust - light interaction: 1-tap reveal ----------
 function TrustSection() {
   const [revealed, setRevealed] = useStateS(false);
   return (
     <div className="col" style={{ gap: 24 }}>
       <SectionTitle
-        num="07"
+        num="06"
         eyebrow="Trust"
         title="Trust is earned through verification."
         sub="Claude output is not trusted because it sounds confident. It is trusted when it is grounded, reviewable, and easy to verify."
@@ -324,12 +277,12 @@ function TrustSection() {
   );
 }
 
-// ---------- 08 Claude Code — show patterns, no picker ----------
+// ---------- 07 Claude Code - show patterns, no picker ----------
 function CodeSection() {
   return (
     <div className="col" style={{ gap: 24 }}>
       <SectionTitle
-        num="08"
+        num="07"
         eyebrow="Claude Code"
         title="Small, scoped, testable."
         sub="Claude Code should not start with 'build everything.' It starts with a small task, sample input and output, tests, and a review."
@@ -345,7 +298,7 @@ function CodeSection() {
         </div>
       </div>
       <div>
-        <div className="eyebrow" style={{ marginBottom: 8 }}>A concrete example — config validator</div>
+        <div className="eyebrow" style={{ marginBottom: 8 }}>A concrete example - config validator</div>
         <PromptBlock copyText={PGS.CODE_VALIDATOR_EXAMPLE}>{PGS.CODE_VALIDATOR_EXAMPLE}</PromptBlock>
         <div style={{ marginTop: 12 }}>
           <ClaudeRunner prompt={PGS.CODE_VALIDATOR_EXAMPLE} label="Run it" compact hint="See how Claude scopes a small utility with tests." />
@@ -355,15 +308,15 @@ function CodeSection() {
   );
 }
 
-// ---------- 09 Skills — info-only ----------
+// ---------- 08 Skills - info-only ----------
 function SkillsSection() {
   return (
     <div className="col" style={{ gap: 24 }}>
       <SectionTitle
-        num="09"
+        num="08"
         eyebrow="Skills"
         title="When a prompt earns its keep, package it."
-        sub="A Skill is for when the team repeatedly asks Claude to follow the same workflow, rules, or output format. Don't start with Skills — start with a prompt. If it works more than once, graduate it."
+        sub="A Skill is for when the team repeatedly asks Claude to follow the same workflow, rules, or output format. Don't start with Skills - start with a prompt. If it works more than once, graduate it."
       />
       <div className="card">
         <div className="eyebrow" style={{ marginBottom: 10 }}>Skill examples worth packaging</div>
@@ -377,7 +330,7 @@ function SkillsSection() {
         </div>
       </div>
       <div>
-        <div className="eyebrow" style={{ marginBottom: 8 }}>Skill starter template — paste, fill in, save as a markdown file</div>
+        <div className="eyebrow" style={{ marginBottom: 8 }}>Skill starter template - paste, fill in, save as a markdown file</div>
         <PromptBlock copyText={PGS.SKILL_TEMPLATE}>{PGS.SKILL_TEMPLATE}</PromptBlock>
       </div>
       <div className="card-flat small">
@@ -388,12 +341,12 @@ function SkillsSection() {
   );
 }
 
-// ---------- 10 Methods — info-only ----------
+// ---------- 09 Methods - info-only ----------
 function MethodsSection() {
   return (
     <div className="col" style={{ gap: 24 }}>
       <SectionTitle
-        num="10"
+        num="09"
         eyebrow="Methods"
         title="How to work with Claude without getting lost."
         sub="Don't ask Claude to solve a large messy task in one shot. Give it a small operating system: phases, a todo list, acceptance criteria, and a verification loop."
@@ -435,7 +388,7 @@ function MethodsSection() {
         </div>
       </div>
       <div>
-        <div className="eyebrow" style={{ marginBottom: 8 }}>Phase prompt — copy & adapt</div>
+        <div className="eyebrow" style={{ marginBottom: 8 }}>Phase prompt - copy & adapt</div>
         <PromptBlock copyText={PGS.TEMPLATES[0].template}>{PGS.TEMPLATES[0].template}</PromptBlock>
       </div>
     </div>
@@ -443,7 +396,7 @@ function MethodsSection() {
 }
 
 Object.assign(window, {
-  WelcomeSection, ContextSection, EnvironmentSection,
+  WelcomeSection, EnvironmentSection,
   ToolboxSection, PromptsSection, ExplainerSection,
   TrustSection, CodeSection, SkillsSection, MethodsSection,
 });

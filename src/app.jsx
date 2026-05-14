@@ -1,4 +1,4 @@
-/* PGS Lab — App root, routing, mode shell. */
+/* PGS Lab - App root, routing, mode shell. */
 
 const { useState: useStateA, useEffect: useEffectA, useMemo: useMemoA } = React;
 
@@ -19,7 +19,6 @@ function setHash(mode, section) {
 // ---- Attendee section views map ----
 const ATTENDEE_VIEWS = {
   welcome: WelcomeSection,
-  context: ContextSection,
   environment: EnvironmentSection,
   toolbox: ToolboxSection,
   prompts: PromptsSection,

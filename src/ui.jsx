@@ -1,4 +1,4 @@
-/* PGS Lab — shared UI primitives. Exposes components on window. */
+/* PGS Lab - shared UI primitives. Exposes components on window. */
 
 const { useState, useEffect, useRef, useMemo, useCallback } = React;
 
@@ -230,7 +230,7 @@ function QRPlaceholder({ url, size = 280 }) {
 
   useEffect(() => {
     if (!svgRef.current) return;
-    // qrcode-generator library is loaded via CDN — global `qrcode`.
+    // qrcode-generator library is loaded via CDN - global `qrcode`.
     if (typeof window.qrcode !== "function") {
       svgRef.current.innerHTML = `<text x="50%" y="50%" text-anchor="middle" font-family="monospace" font-size="11" fill="#6b665d">QR library loading…</text>`;
       return;
@@ -352,7 +352,7 @@ function ClaudeRunner({ prompt, label = "Run with Claude", compact = false, hint
 
   const run = async () => {
     if (!prompt || !prompt.trim()) {
-      setError("Prompt is empty — write or paste a prompt first.");
+      setError("Prompt is empty - write or paste a prompt first.");
       return;
     }
     setRunning(true); setError(null); setOutput("");

@@ -1,42 +1,41 @@
-/* PGS Claude Practice Lab — content data (no JSX). Attached to window.PGS */
+/* PGS Claude Practice Lab - content data (no JSX). Attached to window.PGS */
 
 window.PGS = (function () {
 
   const SECTIONS = [
-    { id: "welcome",       num: "01", min: 5, title: "Welcome & onboarding",          short: "Welcome" },
-    { id: "context",       num: "02", min: 4, title: "What this workshop is & is not", short: "Framing" },
-    { id: "environment",   num: "03", min: 5, title: "Claude Team & shared assets",    short: "Team" },
-    { id: "toolbox",       num: "04", min: 6, title: "Claude toolbox",                  short: "Toolbox" },
-    { id: "prompts",       num: "05", min: 7, title: "Bad prompt vs better prompt",     short: "Prompts" },
-    { id: "explainer",     num: "06", min: 7, title: "Cross-department explainer",      short: "Explainer" },
-    { id: "trust",         num: "07", min: 8, title: "Trust & verification",            short: "Trust" },
-    { id: "code",          num: "08", min: 7, title: "Claude Code safe-use pattern",    short: "Code" },
-    { id: "skills",        num: "09", min: 5, title: "Skills as reusable workflows",    short: "Skills" },
-    { id: "methods",       num: "10", min: 6, title: "How to work with Claude without getting lost", short: "Methods" },
-    { id: "templates",     num: "11", min: 4, title: "Workflow templates",              short: "Templates" },
-    { id: "issues",        num: "12", min: 5, title: "Common issues lab",               short: "Issues" },
-    { id: "library",       num: "13", min: 4, title: "Example library",                 short: "Library" },
-    { id: "pilot",         num: "14", min: 6, title: "Playground — try Claude live",  short: "Playground" },
-    { id: "kit",           num: "15", min: 3, title: "Take-home pack",                short: "Take-home" },
-    { id: "closing",       num: "16", min: 1, title: "Leave with one safe pilot",       short: "Close" },
+    { id: "welcome",       num: "01", min: 5, title: "Welcome",                              short: "Welcome" },
+    { id: "environment",   num: "02", min: 5, title: "Claude Team and shared assets",        short: "Team" },
+    { id: "toolbox",       num: "03", min: 6, title: "Claude toolbox",                       short: "Toolbox" },
+    { id: "prompts",       num: "04", min: 7, title: "Bad prompt vs better prompt",          short: "Prompts" },
+    { id: "explainer",     num: "05", min: 7, title: "Cross-department explainer",           short: "Explainer" },
+    { id: "trust",         num: "06", min: 8, title: "Trust and verification",               short: "Trust" },
+    { id: "code",          num: "07", min: 7, title: "Claude Code safe-use pattern",         short: "Code" },
+    { id: "skills",        num: "08", min: 5, title: "Skills as reusable workflows",         short: "Skills" },
+    { id: "methods",       num: "09", min: 6, title: "Working with Claude without getting lost", short: "Methods" },
+    { id: "templates",     num: "10", min: 4, title: "Workflow templates",                   short: "Templates" },
+    { id: "issues",        num: "11", min: 5, title: "Common issues lab",                    short: "Issues" },
+    { id: "library",       num: "12", min: 4, title: "Example library",                      short: "Library" },
+    { id: "pilot",         num: "13", min: 6, title: "Playground: try Claude live",          short: "Playground" },
+    { id: "kit",           num: "14", min: 3, title: "Take-home pack",                       short: "Take-home" },
+    { id: "closing",       num: "15", min: 1, title: "Leave with one safe pilot",            short: "Close" },
   ];
 
-  // Example-project metadata — used as the scenario for every filled-in .md template below.
+  // Example-project metadata - used as the scenario for every filled-in .md template below.
   // All templates below are written as if they're real files inside this fictional project,
   // so attendees see a coherent set rather than a pile of blank placeholders.
   const EXAMPLE_PROJECT = {
-    name: "sample-game · v4 paytable handoff",
+    name: "sample-game v4 paytable handoff",
     summary: "Math handed off the v4 paytable for sample-game on Tuesday. Friday release target. QA needs regression. PM needs release-readiness. Multiple departments need to align before sign-off.",
   };
 
   const TOOLBOX_HELPS = [
-    { t: "Summarize", d: "Long notes, threads, specs — into the few things that matter." },
-    { t: "Compare",   d: "Two versions of a file, config, or spec — what changed and why it matters." },
-    { t: "Explain",   d: "A file from another department — in plain language, with terms to confirm." },
-    { t: "Draft",     d: "Follow-up questions, emails, agendas, handoff notes — for a human to edit." },
+    { t: "Summarize", d: "Long notes, threads, specs - into the few things that matter." },
+    { t: "Compare",   d: "Two versions of a file, config, or spec - what changed and why it matters." },
+    { t: "Explain",   d: "A file from another department - in plain language, with terms to confirm." },
+    { t: "Draft",     d: "Follow-up questions, emails, agendas, handoff notes - for a human to edit." },
     { t: "Review",    d: "Run your own work through a structured checklist before sharing it." },
     { t: "Checklist", d: "Turn implicit knowledge into a visible checklist anyone can run." },
-    { t: "Small tested code", d: "Parsers, validators, formatters — scoped and tested, not production-wide." },
+    { t: "Small tested code", d: "Parsers, validators, formatters - scoped and tested, not production-wide." },
     { t: "Skill",     d: "When you do the same task a third time, package it as a Skill." },
   ];
 
@@ -48,8 +47,6 @@ window.PGS = (function () {
     "Replace department owners",
     "Treat assumptions as facts",
   ];
-
-  const TOOLBOX_PATTERNS = []; // kept for back-compat; no longer rendered
 
   const BAD_PROMPT_S5 = `Check this file.`;
 
@@ -93,15 +90,6 @@ Return:
 5. What I should not assume
 
 Do not make approval decisions.`;
-
-  const EXPLAINER_SCENARIOS = [
-    { id: "config-math", label: "Explain this config to Math" },
-    { id: "math-dev",    label: "Explain this math note to Dev" },
-    { id: "release-qa",  label: "Explain this release note to QA" },
-    { id: "code-pm",     label: "Explain this code change to PM" },
-    { id: "bug-team",    label: "Explain this bug report to another team" },
-    { id: "custom",      label: "Custom scenario" },
-  ];
 
   const EXPLAINER_EXAMPLE_INPUT = `The pool file was regenerated after the latest paytable adjustment. Simulator output needs to be compared against the expected RTP before downstream validation continues.`;
 
@@ -185,16 +173,6 @@ Rules:
 3. Include sample input and expected output.
 4. Do not modify existing production files.
 5. Explain how to verify the result.`;
-
-  const CODE_TASKS = [
-    "Parser",
-    "Formatter",
-    "Diff checker",
-    "Log summarizer",
-    "Config validator",
-    "Report generator",
-    "Test generator",
-  ];
 
   const CODE_VALIDATOR_EXAMPLE = `Create a small config validation utility.
 
@@ -281,7 +259,7 @@ Do not approve or finalize anything.`,
     {
       id: "confident",
       title: "Claude sounds confident but may be wrong",
-      experience: "A fluent answer that sounds correct — but may include silent assumptions.",
+      experience: "A fluent answer that sounds correct - but may include silent assumptions.",
       why: "Fluent output hides missing information. Claude may fill gaps unless told not to.",
       fix: ["Ask Claude to separate facts, assumptions, unknowns, and questions."],
       bad: `Everything looks correct. This should be approved.`,
@@ -387,7 +365,7 @@ If a term is unclear, do not guess. Put it under "Terms to confirm."`,
       exercise: {
         type: "freeform",
         question: "Write three terms from your department another team might misunderstand.",
-        placeholder: "Term — what it means in your team\nTerm — what it means\nTerm — what it means",
+        placeholder: "Term - what it means in your team\nTerm - what it means\nTerm - what it means",
       },
     },
     {
@@ -572,7 +550,7 @@ Use plain language.`,
 
   // ---------- Workflow Templates (tabs) ----------
   // Every `.template` below is written as if it were a real .md file in a fictional
-  // PGS project: "sample-game / v4 paytable handoff". The set is meant to be read together —
+  // PGS project: "sample-game / v4 paytable handoff". The set is meant to be read together -
   // PROMPT_CARD wraps the prompt, TODO tracks the work, PLAN comes before changes,
   // CHECKLIST is the repeatable review pattern, CONTEXT bridges terminology,
   // SKILL_SEED packages it for reuse.
@@ -580,26 +558,26 @@ Use plain language.`,
     {
       id: "phase",
       name: "Phase prompt",
-      what: "Splits Claude work into clear stages — Understand → Plan → Draft → Review — so Claude can't jump straight to a final answer.",
+      what: "Splits Claude work into clear stages - Understand → Plan → Draft → Review - so Claude can't jump straight to a final answer.",
       when: "Any task where the cost of a wrong answer is higher than the cost of a small delay. Especially: reviews, handoffs, anything that touches config or code.",
       why: "Lets a human supervise each stage and correct course early. Stops Claude from rewriting before you've agreed on the approach.",
       template: `We will review the v4 paytable handoff from the Math team in phases. Stop after each phase and wait for me to say "go."
 
-Phase 1 — Understand
+Phase 1 - Understand
 - Read the handoff note below.
 - Summarize what was sent in plain English.
 - Extract specific values, version numbers, and dates.
 - List what is missing (e.g. is there a diff vs v3? is the side-bet pool addressed?).
 
-Phase 2 — Plan
+Phase 2 - Plan
 - Propose what should be checked before QA regression starts.
 - List risks given the Friday release target.
 - Tell me what needs human review (Math, QA, PM).
 
-Phase 3 — Draft (only after I confirm the plan)
+Phase 3 - Draft (only after I confirm the plan)
 - Produce: questions for Math, test adjustments for QA, items for PM sign-off.
 
-Phase 4 — Review
+Phase 4 - Review
 - Check the draft against CHECKLIST.md.
 - Mark items where you were uncertain.
 
@@ -620,7 +598,7 @@ The v4 paytable was regenerated after this week's RTP adjustment. The pool file 
       what: "A markdown task tracker that keeps Claude and humans aligned on what's done, blocked, or needs review across multiple Claude sessions.",
       when: "Tasks with more than three steps, multiple reviewers, or that may continue in another chat. Especially: cross-team handoffs.",
       why: "Persistent reference both humans and Claude can inspect, edit, and share. Stops you from re-explaining context every session.",
-      template: `# TODO — v4 paytable handoff review
+      template: `# TODO - v4 paytable handoff review
 
 ## Goal
 Understand the v4 paytable handoff from Math and prepare the question lists QA + PM need answered before Friday's release.
@@ -630,7 +608,7 @@ Understand the v4 paytable handoff from Math and prepare the question lists QA +
 - Handoff received: Tuesday afternoon, from @math-lead
 - Target release: Friday this week
 - Prior version: v3 (currently in staging)
-- Side-bet pool file was also regenerated — not addressed in the handoff note
+- Side-bet pool file was also regenerated - not addressed in the handoff note
 
 ## Claude's role
 Acts as: cross-team explainer and question generator.
@@ -655,10 +633,10 @@ Claude must not:
 
 ## Task checklist
 - [x] Receive and sanitize handoff note
-- [x] Phase 1 — Understand: ask Claude to summarize the handoff
-- [x] Phase 2 — Plan: list what needs to be verified
-- [ ] Phase 3 — Draft: produce question lists for Math, QA, PM
-- [ ] Phase 4 — Review: cross-check questions against the v3 → v4 diff
+- [x] Phase 1 - Understand: ask Claude to summarize the handoff
+- [x] Phase 2 - Plan: list what needs to be verified
+- [ ] Phase 3 - Draft: produce question lists for Math, QA, PM
+- [ ] Phase 4 - Review: cross-check questions against the v3 → v4 diff
 - [ ] Send Math questions to @math-lead
 - [ ] Send QA questions to @qa-lead
 - [ ] Confirm Friday release readiness with @pm
@@ -681,9 +659,9 @@ PGS Workshop Project → handoffs/v4-paytable-review/`,
       id: "plan",
       name: "PLAN.md",
       what: "A short plan Claude writes before editing anything or producing a final output.",
-      when: "Complex tasks — anything touching code, configs, or cross-team work. Always before the first \`Draft\` phase.",
+      when: "Complex tasks - anything touching code, configs, or cross-team work. Always before the first \`Draft\` phase.",
       why: "Prevents Claude from moving too fast. Lets you correct the approach while it's still cheap.",
-      template: `# PLAN — v4 paytable handoff review
+      template: `# PLAN - v4 paytable handoff review
 
 ## Objective
 Produce a clear, owner-reviewable summary of what changed in the v4 paytable, with explicit questions for Math and QA before regression starts.
@@ -710,7 +688,7 @@ Produce a clear, owner-reviewable summary of what changed in the v4 paytable, wi
 6. Produce a release-readiness summary for PM
 
 ## Risks
-- The handoff note may be incomplete — silent changes are possible
+- The handoff note may be incomplete - silent changes are possible
 - Side-bet pool change could affect compliance-relevant RTP without being flagged
 - Friday release date is tight if Math needs to clarify multiple items
 
@@ -735,9 +713,9 @@ Produce a clear, owner-reviewable summary of what changed in the v4 paytable, wi
       id: "checklist",
       name: "CHECKLIST.md",
       what: "A reusable checklist that turns department review knowledge into a visible, repeatable pattern.",
-      when: "Any review you do more than once — QA passes, handoff reviews, pre-meeting prep, release readiness.",
+      when: "Any review you do more than once - QA passes, handoff reviews, pre-meeting prep, release readiness.",
       why: "Claude is more trustworthy when it checks against visible criteria instead of improvising. Also: makes implicit knowledge teachable.",
-      template: `# CHECKLIST — Paytable handoff review
+      template: `# CHECKLIST - Paytable handoff review
 
 ## Use this checklist when
 You receive a paytable change from Math and need to prepare it for downstream review (QA, Dev, PM) before regression begins.
@@ -779,22 +757,22 @@ Stop and ask for human review if:
       id: "context",
       name: "CONTEXT.md",
       what: "A briefing file that gives Claude department-local glossary, audience, and boundaries.",
-      when: "Anywhere department terminology might trip Claude up — the first time you start a workflow Claude doesn't have prior context for.",
+      when: "Anywhere department terminology might trip Claude up - the first time you start a workflow Claude doesn't have prior context for.",
       why: "Compact briefing prevents Claude from guessing internal meaning of terms like 'pool', 'ticket tag', 'regression'.",
-      template: `# CONTEXT — Paytable handoff review at PGS
+      template: `# CONTEXT - Paytable handoff review at PGS
 
 ## Audience
 The output will be read by:
-- Dev — preparing config changes for staging
-- QA — planning regression
-- PM — deciding release readiness
-- Math — confirming interpretations of their handoff
+- Dev - preparing config changes for staging
+- QA - planning regression
+- PM - deciding release readiness
+- Math - confirming interpretations of their handoff
 
 ## Purpose
 This context helps Claude:
 - Translate Math team handoffs into questions and test items
 - Surface ambiguity instead of guessing
-- Stay within "prep aid" boundaries — never decide or approve
+- Stay within "prep aid" boundaries - never decide or approve
 
 ## Terms and glossary
 - **Paytable**: the numeric table mapping game outcomes to payout values
@@ -827,7 +805,7 @@ Claude must not:
 - Numbered lists for questions
 - A short summary paragraph at the top
 - Items requiring sign-off in a separately-labeled section
-- Plain language — no Math-internal shorthand unless defined in this file
+- Plain language - no Math-internal shorthand unless defined in this file
 
 ## Verification expectations
 Before using Claude's output:
@@ -839,10 +817,10 @@ Before using Claude's output:
     {
       id: "prompt-card",
       name: "PROMPT_CARD.md",
-      what: "A shareable card describing one reusable prompt — what it does, when to use it, what to expect, when to graduate it to a Skill.",
-      when: "Whenever a prompt has earned its keep — used at least twice and the output was actually useful.",
+      what: "A shareable card describing one reusable prompt - what it does, when to use it, what to expect, when to graduate it to a Skill.",
+      when: "Whenever a prompt has earned its keep - used at least twice and the output was actually useful.",
       why: "Other people should not have to reinvent good prompts in private chats. Cards are the bridge between one-off prompts and Skills.",
-      template: `# Prompt Card — Cross-team handoff explainer
+      template: `# Prompt Card - Cross-team handoff explainer
 
 ## Use when
 You receive a file, note, or change from another department (Math, V2, iGaming, QA, Dev) and need to quickly understand it before discussing with the owner.
@@ -881,16 +859,16 @@ File / note:
 - Any value or decision suggested
 
 ## When to turn this into a Skill
-This card has been used by Dev and QA at least 5 times for handoff reviews — it's a candidate for a "Cross-Department Explainer" Skill. See SKILL_SEED.md.`,
+This card has been used by Dev and QA at least 5 times for handoff reviews - it's a candidate for a "Cross-Department Explainer" Skill. See SKILL_SEED.md.`,
     },
 
     {
       id: "skill-seed",
       name: "SKILL_SEED.md",
-      what: "Instructions Claude can use to behave consistently for a repeating workflow — the seed of a future Skill.",
+      what: "Instructions Claude can use to behave consistently for a repeating workflow - the seed of a future Skill.",
       when: "After a Prompt Card has been used more than three times and the team agrees the workflow is worth packaging.",
       why: "Skills make a vetted workflow available consistently. Where company settings allow it, they can be shared across the team.",
-      template: `# Skill seed — Cross-Department Handoff Explainer
+      template: `# Skill seed - Cross-Department Handoff Explainer
 
 ## Use this skill when
 You receive a file or note from another PGS department (Math, V2, iGaming, QA, Dev) and need to prepare for a review conversation with the owner.
@@ -919,9 +897,9 @@ You receive a file or note from another PGS department (Math, V2, iGaming, QA, D
 6. Terms to confirm
 
 ## Reference files
-- CONTEXT.md — glossary and boundaries
-- CHECKLIST.md — review criteria
-- PROMPT_CARD.md — the prompt that became this Skill
+- CONTEXT.md - glossary and boundaries
+- CHECKLIST.md - review criteria
+- PROMPT_CARD.md - the prompt that became this Skill
 
 ## Maturity
 - Used 6+ times by Dev and QA on real handoffs
@@ -1049,12 +1027,12 @@ Do not claim the result is approved.`,
   ];
 
   // ---------- Playground presets ----------
-  // Each preset is a complete prompt + sample input embedded — ready to Run.
+  // Each preset is a complete prompt + sample input embedded - ready to Run.
   const PRESETS = [
     {
       id: "explainer",
       title: "Explain a file from another team",
-      blurb: "Paste in a note from QA, Math, V2 — get a plain-English summary + questions for the owner.",
+      blurb: "Paste in a note from QA, Math, V2 - get a plain-English summary + questions for the owner.",
       prompt: `I received this note from another department. Explain it to me as someone who is technical but not familiar with this specific workflow.
 
 Note:
@@ -1154,24 +1132,24 @@ Rules:
     {
       id: "phased",
       title: "Phase-based prompt",
-      blurb: "Force Claude to slow down — Understand → Plan → Draft → Review.",
+      blurb: "Force Claude to slow down - Understand → Plan → Draft → Review.",
       prompt: `We will work in phases. Stop after each phase and wait for me to confirm.
 
-Phase 1 — Understand
+Phase 1 - Understand
 - Summarize the input below.
 - List facts.
 - List assumptions.
 - Identify missing context.
 
-Phase 2 — Plan (only after I say "go")
+Phase 2 - Plan (only after I say "go")
 - Propose an approach.
 - List risks.
 - Tell me what needs human review.
 
-Phase 3 — Draft (only after I approve the plan)
+Phase 3 - Draft (only after I approve the plan)
 - Produce the deliverable.
 
-Phase 4 — Review
+Phase 4 - Review
 - Check against acceptance criteria.
 - Mark items needing human review.
 
@@ -1184,13 +1162,13 @@ The math team handed off the v4 paytable. QA needs to run regression. PM wants t
     },
     {
       id: "freestyle",
-      title: "Blank slate — write your own",
+      title: "Blank slate - write your own",
       blurb: "Start from nothing and try anything. Paste a real (sanitized) task.",
       prompt: ``,
     },
   ];
 
-  // ---------- Pilot ideas (curated starter pilots — no form) ----------
+  // ---------- Pilot ideas (curated starter pilots - no form) ----------
   const PILOT_IDEAS = [
     {
       id: "p1",
@@ -1230,7 +1208,7 @@ Do not invent missing details. Mark missing owners as "Owner needed."`,
       id: "p3",
       who: "Dev, QA, Math",
       title: "Pre-review a config / spec change",
-      why: "Get an unbiased second pair of eyes before you sign off — without Claude pretending it can sign off.",
+      why: "Get an unbiased second pair of eyes before you sign off - without Claude pretending it can sign off.",
       effort: "10 minutes",
       risk: "Low (Claude prepares; you decide)",
       prompt: `Review this file as a preparation aid for the owner review.
@@ -1291,7 +1269,7 @@ Rules:
       title: "Capture your first Skill seed",
       why: "If you do something twice and it works, write the seed. If it works a third time, propose the Skill to your team.",
       effort: "3 minutes",
-      risk: "None — it's just a markdown file",
+      risk: "None - it's just a markdown file",
       prompt: `When I give Claude [input], I want it to always [behavior], and never [risk].
 
 Example:
@@ -1299,36 +1277,15 @@ When I give Claude a note from another department, I want it to always explain i
     },
   ];
 
-  // Speaker notes per section for presenter mode
-  const FACILITATOR = {
-    welcome: "Get everyone scanned in and on the page. Stress the framing: we are not here to tell Math, V2, or iGaming how their work should be done. We're here to find one safe Claude pilot per attendee. Encourage people to browse around — this isn't a linear lecture.",
-    context: "Set expectations: this is not a generic AI lecture and not a replacement for department judgement. It's a practical lab. We're looking for ONE safe pilot per person, not full adoption today.",
-    environment: "PGS already pays for Claude Team. The interesting question isn't 'can people access Claude?' — it's 'can we create reusable Projects, Artifacts, and Skills that make Claude useful in real workflows?' Where company settings allow it, those assets can be shared across the team.",
-    toolbox: "Read the eight patterns. Have attendees pick the one closest to their work. Then read the 'should not do alone' card out loud — Claude does not approve math, compliance, or production releases.",
-    prompts: "Walk through the bad prompt and why it fails. Show the better prompt. Have attendees rewrite 'Explain this code.' on their phone. Read 2-3 rewrites aloud and discuss.",
-    explainer: "This is where departments often unblock each other. Pick one scenario and run the prompt live. Emphasize: Claude is the translator, not the decider.",
-    trust: "The trust message is the most important slide. Trust is not vibes. It's verifiability. Run the 'why is this bad' exercise — most attendees will get all six.",
-    code: "If your audience is developer-heavy, spend extra time here. Small scoped utilities with tests are the safe starting point for Claude Code. Big rewrites come later, after the team trusts the workflow.",
-    skills: "Skills come AFTER a prompt has proven useful — not before. Don't start by inventing Skills. Start by writing a good prompt, share the card, then graduate it to a Skill once the team uses it three times.",
-    methods: "Phases prevent Claude from moving too fast. TODO.md keeps Claude and humans aligned. PLAN.md is useful before code or complex review. CHECKLIST.md captures department knowledge without you pretending to own it. CONTEXT.md bridges terminology gaps.",
-    templates: "Walk attendees through the seven templates. Have them copy the one closest to their pilot. Remind: these are starting points, not gospel.",
-    issues: "Pick the two or three issues most likely to bite this audience. Read 'why it happens' and the better prompt. Skip the rest — they can browse on their own.",
-    library: "Show one or two examples live. Tell attendees: copy any of these, adapt to your work, and bring back what you learned.",
-    pilot: "Have everyone open the Playground on their phone. Encourage them to pick the preset closest to their own work, hit Run, and read what Claude actually returns. Five minutes. Walk around. Answer questions.",
-    kit: "Walk through the six pilot ideas. Most attendees will gravitate toward one or two. The templates are generic on purpose — they should adapt them, not follow them literally.",
-    closing: "Don't try to automate everything. Pick one repeated task that is low-risk, annoying, and easy to verify. If it works twice, share it.",
-  };
-
   return {
     SECTIONS, EXAMPLE_PROJECT,
     TOOLBOX_HELPS, TOOLBOX_AVOID,
     BAD_PROMPT_S5, BAD_PROMPT_S5_WHY, BETTER_PROMPT_S5,
-    EXPLAINER_PROMPT, EXPLAINER_SCENARIOS, EXPLAINER_EXAMPLE_INPUT, EXPLAINER_EXAMPLE_OUTPUT,
+    EXPLAINER_PROMPT, EXPLAINER_EXAMPLE_INPUT, EXPLAINER_EXAMPLE_OUTPUT,
     TRUST_CHECKLIST, TRUST_BAD_OUTPUT, TRUST_BAD_REASONS, TRUST_SAFER_OUTPUT,
-    CODE_BAD, CODE_BETTER, CODE_TASKS, CODE_VALIDATOR_EXAMPLE,
+    CODE_BAD, CODE_BETTER, CODE_VALIDATOR_EXAMPLE,
     SKILL_EXAMPLES, SKILL_TEMPLATE,
     ISSUES, TEMPLATES, EXAMPLES, TROUBLESHOOT, MATURITY,
     PRESETS, PILOT_IDEAS,
-    FACILITATOR,
   };
 })();

@@ -1,6 +1,6 @@
 # PGS Claude Practice Lab
 
-A hands-on Claude adoption workshop, packaged as a self-contained web app. Built for an internal 60-minute meeting at Pong Game Studios — attendees scan a QR, run real prompts on their phones, and leave with one safe pilot they can actually use.
+A hands-on Claude adoption workshop, packaged as a self-contained web app. Built for an internal 60-minute meeting at Pong Game Studios - attendees scan a QR, run real prompts on their phones, and leave with one safe pilot they can actually use.
 
 > **Claude drafts. Owners decide.**
 >
@@ -9,18 +9,18 @@ A hands-on Claude adoption workshop, packaged as a self-contained web app. Built
 
 ## What's in here
 
-- **Attendee mode** (`#a/...`) — mobile-first playground. Browse around, copy prompts, run them live against Claude via `window.claude.complete()`, take the templates home.
-- **Presenter mode** (`#p/...`) — projection-friendly. Large display type, per-section timer, facilitator notes, keyboard arrow navigation.
-- **15+ sections**, including a Common Issues Lab, a real-time Playground with seven presets, an example library with Run buttons, and seven filled-in markdown templates from a coherent fictional scenario.
+- **Attendee mode** (`#a/...`) - mobile-first playground. Browse around, copy prompts, run them live against Claude via `window.claude.complete()`, take the templates home.
+- **Presenter mode** (`#p/...`) - projection-friendly. Large display type, per-section timer, keyboard arrow navigation.
+- **16 sections**, including a Common Issues Lab, a real-time Playground with seven presets, an example library with Run buttons, and seven filled-in markdown templates from a coherent fictional scenario.
 
 ## Quick start (local)
 
 No build step. Just serve the directory.
 
 ```bash
-git clone https://github.com/<you>/pgs-claude-practice-lab.git
-cd pgs-claude-practice-lab
-python3 -m http.server 8000
+git clone https://github.com/Amin-ahm/claude-practice-lab.git
+cd claude-practice-lab
+python3 - m http.server 8000
 # open http://localhost:8000
 ```
 
@@ -30,20 +30,11 @@ Or any static server (`npx serve`, `caddy file-server`, etc.).
 
 ## Deploy to GitHub Pages
 
-1. **Create the repo** (you do this — the tooling here is read-only on GitHub):
+1. **Enable Pages**: Repo → Settings → Pages → Source: `Deploy from a branch` → Branch: `main`, folder `/ (root)` → Save.
 
-   ```bash
-   gh repo create pgs-claude-practice-lab --public --source=. --remote=origin
-   git add .
-   git commit -m "Initial commit"
-   git push -u origin main
-   ```
+2. **Wait ~1 min**. GitHub will publish at `https://<your-username>.github.io/<repo-name>/`.
 
-2. **Enable Pages**: Repo → Settings → Pages → Source: `Deploy from a branch` → Branch: `main`, folder `/ (root)` → Save.
-
-3. **Wait ~1 min**. GitHub will publish at `https://<you>.github.io/pgs-claude-practice-lab/`.
-
-4. **The QR auto-points there.** The Welcome screen's QR code reads `window.location.href` — wherever you host this, the QR sends scanners back to the same page. No hardcoded URL anywhere.
+3. **The QR auto-points there.** The Welcome screen's QR code reads `window.location.origin + pathname + "#a/welcome"` - wherever you host this, the QR sends scanners back to the same page in attendee mode. No hardcoded URL anywhere.
 
 ## Project structure
 
@@ -63,15 +54,14 @@ JSX is compiled in the browser via Babel Standalone. This is fine for a workshop
 
 ## Editing content
 
-All workshop content lives in `src/content.js` as a single `window.PGS` object. Edit the strings in place — no rebuild needed.
+All workshop content lives in `src/content.js` as a single `window.PGS` object. Edit the strings in place - no rebuild needed.
 
 - **Sections / agenda**: `SECTIONS`
-- **Example .md files** (the seven templates): `TEMPLATES` — every `template` field is a filled-in markdown file from the example scenario
+- **Example .md files** (the seven templates): `TEMPLATES` - every `template` field is a filled-in markdown file from the example scenario
 - **Common issues**: `ISSUES`
 - **Library examples**: `EXAMPLES`
 - **Playground presets**: `PRESETS`
 - **Pilot ideas** (the take-home gallery): `PILOT_IDEAS`
-- **Facilitator notes** (presenter mode): `FACILITATOR`
 
 ## License
 
